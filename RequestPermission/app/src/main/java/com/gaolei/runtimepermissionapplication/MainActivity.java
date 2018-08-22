@@ -3,6 +3,7 @@ package com.gaolei.runtimepermissionapplication;
 import android.Manifest;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 /** 
  * description: test
@@ -11,6 +12,7 @@ import android.widget.Toast;
 */
 public class MainActivity extends BaseActivity {
 
+    Button button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,9 +20,12 @@ public class MainActivity extends BaseActivity {
         findViewById(R.id.request).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+
                 requestPermission();
             }
         });
+
+
     }
 
     public void requestPermission(){
