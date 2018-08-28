@@ -14,6 +14,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import static com.gaolei.runtimepermissionapplication.PermissionUtil.PERMISSION_CODE;
 
@@ -42,7 +43,7 @@ public class BaseActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull final String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         boolean hasAllGranted = true;
-
+        Log.d("gaolei","grantResults.length:"+grantResults.length);
         switch (requestCode) {
             case PERMISSION_CODE: {
                 for (int i = 0; i < grantResults.length; ++i) {
@@ -63,7 +64,8 @@ public class BaseActivity extends AppCompatActivity {
                         break;
                     }
                 }
-                if (hasAllGranted) {
+                //判断grantResults.length==0 则忽略，不是requestPermisssion而来，onRestart可能被调用多次
+                if (grantResults.length > 0 && hasAllGranted) {
                     mRequestPermissionCallBack.granted();
                 }
             }
@@ -79,7 +81,7 @@ public class BaseActivity extends AppCompatActivity {
      */
 
     public void requestPermission(final Context context, final String[] permissions,
-                                   PermissionUtil.RequestPermissionCallBack callback) {
+                                  PermissionUtil.RequestPermissionCallBack callback) {
         this.mRequestPermissionCallBack = callback;
 
         //如果所有权限都已授权，则直接返回授权成功,只要有一项未授权，则发起权限请求
