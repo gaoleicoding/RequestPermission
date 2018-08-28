@@ -1,6 +1,5 @@
 package com.gaolei.runtimepermissionapplication.crashhandler;
 
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -13,7 +12,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
-import com.gaolei.runtimepermissionapplication.MainActivity;
 import com.gaolei.runtimepermissionapplication.application.CustomApplication;
 
 import java.io.File;
@@ -23,22 +21,21 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class CrashHandler implements Thread.UncaughtExceptionHandler {
+public class CrashHandler2 implements Thread.UncaughtExceptionHandler {
     /**
      * 系统默认的异常处理类
      */
     private Thread.UncaughtExceptionHandler mDefaultHandler;
     Context mcontext;
-    private static CrashHandler INSTANCE = new CrashHandler();
+    private static CrashHandler2 INSTANCE = new CrashHandler2();
     String errorSavePath;
     //用来存储设备信息和异常信息
     private Map<String, String> infos = new LinkedHashMap();
 
-    public static CrashHandler getInstance() {
+    public static CrashHandler2 getInstance() {
         return INSTANCE;
     }
 
@@ -51,7 +48,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
     @Override
     public void uncaughtException(Thread thread, Throwable ex) {
 
-        Log.d("zmy","CrashHandler---------------------");
+        Log.d("zmy","CrashHandler2---------------------");
         if (!handleException(ex) && mDefaultHandler != null) {
             mDefaultHandler.uncaughtException(thread, ex);// 如果未处理异常，那么系统默认的异常处理类处理
         } else {
@@ -65,7 +62,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             Class clazz= null;
             try {
                 clazz = Class.forName("com.gaolei.runtimepermissionapplication.MainActivity");
-            } catch (java.lang.Exception exception) {
+            } catch (Exception exception) {
                 exception.printStackTrace();
             }
             Intent intent = new Intent(CustomApplication.context,clazz);
