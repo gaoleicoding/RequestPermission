@@ -1,4 +1,4 @@
-package com.gaolei.runtimepermissionapplication;
+package com.gaolei.requestpermission;
 
 
 import android.Manifest;
@@ -8,8 +8,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
-import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+
+import com.gaolei.requestpermission.util.Utils;
 
 public class PermissionUtil {
 
@@ -51,7 +52,9 @@ public class PermissionUtil {
                 })
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-
+                        if (Utils.getTopActivity(activity).equals("SplashActivity")) {
+                            activity.finish();
+                        }
                         dialog.dismiss();
                     }
                 });
@@ -89,6 +92,10 @@ public class PermissionUtil {
                 content = String.format(ifForeverDeny, "相机");
             if (permissions[0].equals(Manifest.permission.WRITE_EXTERNAL_STORAGE))
                 content = String.format(ifForeverDeny, "存储");
+            if (permissions[0].equals(Manifest.permission.ACCESS_FINE_LOCATION))
+                content = String.format(ifForeverDeny, "位置");
+            if (permissions[0].equals(Manifest.permission.WRITE_CONTACTS))
+                content = String.format(ifForeverDeny, "联系人");
         }
         if (permissions.length > 1) {
             StringBuilder stringBuilder = new StringBuilder();

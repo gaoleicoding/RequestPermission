@@ -1,4 +1,4 @@
-package com.gaolei.runtimepermissionapplication.crashhandler;
+package com.gaolei.requestpermission.crashhandler;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -12,7 +12,8 @@ import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
-import com.gaolei.runtimepermissionapplication.application.CustomApplication;
+import com.gaolei.requestpermission.MainActivity;
+import com.gaolei.requestpermission.application.CustomApplication;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -24,18 +25,18 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class CrashHandler2 implements Thread.UncaughtExceptionHandler {
+public class CrashHandler implements Thread.UncaughtExceptionHandler {
     /**
      * 系统默认的异常处理类
      */
     private Thread.UncaughtExceptionHandler mDefaultHandler;
     Context mcontext;
-    private static CrashHandler2 INSTANCE = new CrashHandler2();
+    private static CrashHandler INSTANCE = new CrashHandler();
     String errorSavePath;
     //用来存储设备信息和异常信息
     private Map<String, String> infos = new LinkedHashMap();
 
-    public static CrashHandler2 getInstance() {
+    public static CrashHandler getInstance() {
         return INSTANCE;
     }
 
@@ -48,7 +49,7 @@ public class CrashHandler2 implements Thread.UncaughtExceptionHandler {
     @Override
     public void uncaughtException(Thread thread, Throwable ex) {
 
-        Log.d("zmy","CrashHandler2---------------------");
+        Log.d("zmy","CrashHandler---------------------");
         if (!handleException(ex) && mDefaultHandler != null) {
             mDefaultHandler.uncaughtException(thread, ex);// 如果未处理异常，那么系统默认的异常处理类处理
         } else {
@@ -59,24 +60,19 @@ public class CrashHandler2 implements Thread.UncaughtExceptionHandler {
             }
 
             //崩溃后，重启应用
-            Class clazz= null;
-            try {
-                clazz = Class.forName("com.gaolei.runtimepermissionapplication.MainActivity");
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
-            Intent intent = new Intent(CustomApplication.context,clazz);
-            intent.putExtra("error_reboot", true);
 
-            PendingIntent pendingIntent = PendingIntent.getActivity(
-                    mcontext.getApplicationContext(), 0, intent,
-                    PendingIntent.FLAG_ONE_SHOT);
-            AlarmManager mgr = (AlarmManager) mcontext
-                    .getSystemService(Context.ALARM_SERVICE);
-            mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 1000,
-                    pendingIntent); // 1秒钟后重启应用
-            android.os.Process.killProcess(android.os.Process.myPid());
-            System.exit(10);
+//            Intent intent = new Intent(CustomApplication.context,MainActivity.class);
+//            intent.putExtra("error_reboot", true);
+//
+//            PendingIntent pendingIntent = PendingIntent.getActivity(
+//                    mcontext.getApplicationContext(), 0, intent,
+//                    PendingIntent.FLAG_ONE_SHOT);
+//            AlarmManager mgr = (AlarmManager) mcontext
+//                    .getSystemService(Context.ALARM_SERVICE);
+//            mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 1000,
+//                    pendingIntent); // 1秒钟后重启应用
+//            android.os.Process.killProcess(android.os.Process.myPid());
+//            System.exit(10);
         }
     }
 
@@ -88,7 +84,7 @@ public class CrashHandler2 implements Thread.UncaughtExceptionHandler {
             @Override
             public void run() {
                 Looper.prepare();
-                Toast toast = Toast.makeText(mcontext, "程序出错了，我们会尽快修复，稍后将重启应用！",
+                Toast toast = Toast.makeText(mcontext, "程序此功能出错了，我们会尽快修复，您可使用其它功能！",
                         Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.CENTER, 0, 0);
                 toast.show();

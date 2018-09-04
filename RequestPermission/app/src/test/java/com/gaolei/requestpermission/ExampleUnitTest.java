@@ -1,4 +1,4 @@
-package com.gaolei.runtimepermissionapplication;
+package com.gaolei.requestpermission;
 
 import org.junit.Test;
 

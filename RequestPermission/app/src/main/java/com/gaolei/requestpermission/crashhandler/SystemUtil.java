@@ -1,4 +1,4 @@
-package com.gaolei.runtimepermissionapplication.crashhandler;
+package com.gaolei.requestpermission.crashhandler;
 
 import android.app.Activity;
 import android.content.Context;

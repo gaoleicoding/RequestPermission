@@ -1,4 +1,4 @@
-package com.gaolei.runtimepermissionapplication;
+package com.gaolei.requestpermission;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

@@ -1,22 +1,16 @@
-package com.gaolei.runtimepermissionapplication;
+package com.gaolei.requestpermission;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import static com.gaolei.runtimepermissionapplication.PermissionUtil.PERMISSION_CODE;
+import static com.gaolei.requestpermission.PermissionUtil.PERMISSION_CODE;
 
 /**
  * description: 公共activity类
@@ -80,8 +74,8 @@ public class BaseActivity extends AppCompatActivity {
      * @param callback
      */
 
-    public void requestPermission(final Context context, final String[] permissions,
-                                  PermissionUtil.RequestPermissionCallBack callback) {
+    public void requestPermission(final Context context,
+                                  PermissionUtil.RequestPermissionCallBack callback,final String... permissions) {
         this.mRequestPermissionCallBack = callback;
 
         //如果所有权限都已授权，则直接返回授权成功,只要有一项未授权，则发起权限请求
